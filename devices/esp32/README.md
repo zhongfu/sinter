@@ -1,5 +1,30 @@
-# Hello World Example
+# ESP32 Sinter example
 
-Starts a FreeRTOS task to print "Hello World"
+Runs SVML programs, that's about it.
 
-See the README.md file in the upper level 'examples' directory for more information about examples.
+## Building
+
+First, export the ESP-IDF envs:
+
+```
+. path/to/esp-idf/export.sh
+```
+
+Then build:
+
+```
+rm -r build
+./build.sh
+```
+
+## Flashing
+
+```
+idf.py flash
+```
+
+## Usage
+
+```
+./run.sh /dev/ttyUSBx ../../test_programs/return_1.svm
+```
