@@ -15,6 +15,26 @@ static _Noreturn void app_exit(void) {
   }
 }
 
+static void print_string(const char *s, bool is_error) {
+  (void) is_error;
+  printf("%s", s);
+}
+
+static void print_integer(int32_t v, bool is_error) {
+  (void) is_error;
+  printf("%d", v);
+}
+
+static void print_float(float v, bool is_error) {
+  (void) is_error;
+  printf("%f", v);
+}
+
+static void print_flush(bool is_error) {
+  (void) is_error;
+  printf("\n");
+}
+
 void app_main(void) {
   uart_driver_install(CONFIG_ESP_CONSOLE_UART_NUM, 256, 0, 0, NULL, 0);
   esp_vfs_dev_uart_use_driver(CONFIG_ESP_CONSOLE_UART_NUM);
@@ -49,6 +69,11 @@ void app_main(void) {
     printf("Failed to read binary.\n");
     app_exit();
   }
+
+  sinter_printer_float = print_float;
+  sinter_printer_string = print_string;
+  sinter_printer_integer = print_integer;
+  sinter_printer_flush = print_flush;
 
   sinter_value_t result;
   sinter_fault_t fault = sinter_run(binary, binary_size, &result);
